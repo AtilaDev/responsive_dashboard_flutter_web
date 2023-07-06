@@ -1,4 +1,5 @@
 import 'package:dashboard/components/my_files.dart';
+import 'package:dashboard/components/recent_files.dart';
 import 'package:flutter/material.dart';
 import 'package:dashboard/components/header.dart';
 import 'package:dashboard/components/storage_details.dart';
@@ -9,7 +10,7 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.all(defaultPadding),
         child: Column(
@@ -25,15 +26,7 @@ class DashboardScreen extends StatelessWidget {
                     children: [
                       MyFiles(),
                       SizedBox(height: defaultPadding),
-                      Container(
-                        padding: EdgeInsets.all(defaultPadding),
-                        decoration: BoxDecoration(
-                          color: secondaryColor,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                      )
+                      RecentFiles()
                     ],
                   ),
                 ),
