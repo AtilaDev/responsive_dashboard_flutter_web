@@ -9,7 +9,7 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.all(defaultPadding),
         child: Column(
@@ -21,7 +21,21 @@ class DashboardScreen extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 5,
-                  child: MyFiles(),
+                  child: Column(
+                    children: [
+                      MyFiles(),
+                      SizedBox(height: defaultPadding),
+                      Container(
+                        padding: EdgeInsets.all(defaultPadding),
+                        decoration: BoxDecoration(
+                          color: secondaryColor,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(
                   width: defaultPadding,
