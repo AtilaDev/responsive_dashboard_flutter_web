@@ -1,5 +1,6 @@
 import 'package:dashboard/components/file_info_card.dart';
 import 'package:dashboard/models/my_files.dart';
+import 'package:dashboard/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:dashboard/constants.dart';
 
@@ -10,6 +11,7 @@ class MyFiles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size _size = MediaQuery.of(context).size;
     return Column(
       children: [
         Row(
@@ -33,19 +35,45 @@ class MyFiles extends StatelessWidget {
           ],
         ),
         const SizedBox(height: defaultPadding),
-        GridView.builder(
-          shrinkWrap: true,
-          itemCount: demoMyFiels.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            crossAxisSpacing: defaultPadding,
-            childAspectRatio: 1.4,
+        Responsive(
+          mobile: FileInfoCardGridView(
+            crossAxisCount: _size.width < 650 ? 2 : 4,
+            childAspectRatio: _size.width < 650 ? 1.3 : 1,
           ),
-          itemBuilder: (context, index) => FileInfoCard(
-            info: demoMyFiels[index],
-          ),
+          tablet: FileInfoCardGridView(),
+          desktop: FileInfoCardGridView(
+              childAspectRatio: _size.width < 1400 ? 1.1 : 1.4),
         )
       ],
+    );
+  }
+}
+
+class FileInfoCardGridView extends StatelessWidget {
+  const FileInfoCardGridView({
+    super.key,
+    this.crossAxisCount = 4,
+    this.childAspectRatio = 1,
+  });
+
+  final int crossAxisCount;
+  final double childAspectRatio;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: demoMyFiels.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        crossAxisSpacing: defaultPadding,
+        mainAxisSpacing: defaultPadding,
+        childAspectRatio: childAspectRatio,
+      ),
+      itemBuilder: (context, index) => FileInfoCard(
+        info: demoMyFiels[index],
+      ),
     );
   }
 }
